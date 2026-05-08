@@ -4,6 +4,7 @@ const port          = 5000
 const c_alat        = require('./controller/c_alat')
 
 app.use( express.urlencoded({extended:false}))
+app.use( express.static('public'))
 app.set('view engine', 'ejs') 
 app.set('views', './view') 
 
