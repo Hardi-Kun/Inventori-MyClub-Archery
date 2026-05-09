@@ -72,6 +72,7 @@ module.exports =
 
     update: function(req) {
         let sqlData = {
+            kode            : req.body.form_kode_baru,
             nama            : req.body.form_nama,
             kategori        : req.body.form_kategori,
             tipe            : req.body.form_tipe,

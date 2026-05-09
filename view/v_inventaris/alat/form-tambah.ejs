@@ -1,0 +1,112 @@
+<%- include('../../v_layout/head') %>
+
+<div class="container" style="margin-top: 80px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- BREADCRUMB -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/alat" class="text-decoration-none">Inventaris</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tambah Alat</li>
+                </ol>
+            </nav>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-plus me-2"></i> Tambah Alat Baru
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form action="/alat/tambah" method="POST">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-500">Kode Alat <span class="text-danger">*</span></label>
+                                <input type="text" name="form_kode" class="form-control" 
+                                    placeholder="Contoh: BSR-001" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <select name="form_kategori" class="form-select" required>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <option value="Busur">Busur</option>
+                                    <option value="Anak Panah">Anak Panah</option>
+                                    <option value="Pelindung">Pelindung</option>
+                                    <option value="Quiver">Quiver</option>
+                                    <option value="Target & Stand">Target & Stand</option>
+                                    <option value="Perlengkapan Lomba">Perlengkapan Lomba</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama Alat <span class="text-danger">*</span></label>
+                            <input type="text" name="form_nama" class="form-control" 
+                                placeholder="Contoh: Busur Recurve 24 inci" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipe / Spesifikasi</label>
+                            <input type="text" name="form_tipe" class="form-control" 
+                                placeholder="Contoh: Recurve, 28 lbs, Warna Merah">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Jumlah Stok <span class="text-danger">*</span></label>
+                                <input type="number" name="form_stok" class="form-control" 
+                                    min="1" value="1" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Kondisi <span class="text-danger">*</span></label>
+                                <select name="form_kondisi" class="form-select" required>
+                                    <option value="Baik">Baik</option>
+                                    <option value="Cukup">Cukup</option>
+                                    <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select name="form_status" class="form-select" required>
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Dipinjam">Dipinjam</option>
+                                    <option value="Rusak">Rusak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Lokasi Penyimpanan</label>
+                                <input type="text" name="form_lokasi" class="form-control" 
+                                    placeholder="Contoh: Rak A, Loker 2">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tanggal Pembelian</label>
+                                <input type="date" name="form_tgl_pembelian" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="/alat" class="btn btn-secondary">
+                                <i class="fa-solid fa-arrow-left me-1"></i> Batal
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Simpan
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

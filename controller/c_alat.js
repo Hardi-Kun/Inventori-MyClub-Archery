@@ -39,6 +39,7 @@ module.exports =
             req         : req,
             alat        : await alatModel.getByKode(kode),
             notifikasi  : req.query.notif,
+            moment      : moment,
         }
         res.render('v_inventaris/alat/form-edit', data)
     },

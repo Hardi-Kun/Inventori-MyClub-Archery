@@ -1,0 +1,117 @@
+<%- include('../../v_layout/head') %>
+
+<div class="container" style="margin-top: 80px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- BREADCRUMB -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/alat" class="text-decoration-none">Inventaris</a>
+                    </li>
+                    <li class="breadcrumb-item active">Edit Alat</li>
+                </ol>
+            </nav>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-pen me-2"></i> Edit Alat
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form action="/alat/edit/<%= alat[0].kode %>" method="POST">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Kode Alat <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" 
+                                    value="<%= alat[0].kode %>"
+                                <small class="text-danger">
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                    Hati-hati mengubah kode alat!
+                                </small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <select name="form_kategori" class="form-select" required>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <option value="Busur" <%= alat[0].kategori == 'Busur' ? 'selected' : '' %>>Busur</option>
+                                    <option value="Anak Panah" <%= alat[0].kategori == 'Anak Panah' ? 'selected' : '' %>>Anak Panah</option>
+                                    <option value="Pelindung" <%= alat[0].kategori == 'Pelindung' ? 'selected' : '' %>>Pelindung</option>
+                                    <option value="Quiver" <%= alat[0].kategori == 'Quiver' ? 'selected' : '' %>>Quiver</option>
+                                    <option value="Target & Stand" <%= alat[0].kategori == 'Target & Stand' ? 'selected' : '' %>>Target & Stand</option>
+                                    <option value="Perlengkapan Lomba" <%= alat[0].kategori == 'Perlengkapan Lomba' ? 'selected' : '' %>>Perlengkapan Lomba</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama Alat <span class="text-danger">*</span></label>
+                            <input type="text" name="form_nama" class="form-control" 
+                                value="<%= alat[0].nama %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipe / Spesifikasi</label>
+                            <input type="text" name="form_tipe" class="form-control" 
+                                value="<%= alat[0].tipe || '' %>">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Jumlah Stok <span class="text-danger">*</span></label>
+                                <input type="number" name="form_stok" class="form-control" 
+                                    min="1" value="<%= alat[0].stok %>" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Kondisi <span class="text-danger">*</span></label>
+                                <select name="form_kondisi" class="form-select" required>
+                                    <option value="Baik" <%= alat[0].kondisi == 'Baik' ? 'selected' : '' %>>Baik</option>
+                                    <option value="Cukup" <%= alat[0].kondisi == 'Cukup' ? 'selected' : '' %>>Cukup</option>
+                                    <option value="Perlu Perbaikan" <%= alat[0].kondisi == 'Perlu Perbaikan' ? 'selected' : '' %>>Perlu Perbaikan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Status <span class="text-danger">*</span></label>
+                                <select name="form_status" class="form-select" required>
+                                    <option value="Tersedia" <%= alat[0].status == 'Tersedia' ? 'selected' : '' %>>Tersedia</option>
+                                    <option value="Dipinjam" <%= alat[0].status == 'Dipinjam' ? 'selected' : '' %>>Dipinjam</option>
+                                    <option value="Rusak" <%= alat[0].status == 'Rusak' ? 'selected' : '' %>>Rusak</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Lokasi Penyimpanan</label>
+                                <input type="text" name="form_lokasi" class="form-control" 
+                                    value="<%= alat[0].lokasi || '' %>">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tanggal Pembelian</label>
+                                <input type="date" name="form_tgl_pembelian" class="form-control"
+                                    value="<%= alat[0].tgl_pembelian ? moment(alat[0].tgl_pembelian).format('YYYY-MM-DD') : '' %>">
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="/alat" class="btn btn-secondary">
+                                <i class="fa-solid fa-arrow-left me-1"></i> Batal
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Update
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
