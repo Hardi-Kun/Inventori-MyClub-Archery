@@ -1,0 +1,70 @@
+const moment            = require('moment')
+const pinjamanModel     = require('../model/pinjamanModel')
+const alatModel         = require('../model/alatModel')
+
+module.exports =
+{
+    hal_index: async (req, res) => {
+        let data = {
+            req         : req,
+            pinjaman    : await pinjamanModel.getSemua(),
+            terlambat   : await pinjamanModel.getTerlambat(),
+            notifikasi  : req.query.notif,
+            moment      : moment,
+        }
+        res.render('v_inventaris/pinjaman/index', data)
+    },
+
+    hal_form_tambah: async (req, res) => {
+        let data = {
+            req         : req,
+            alat        : await alatModel.getByStatus('Tersedia'),
+            notifikasi  : req.query.notif,
+            moment      : moment,
+        }
+        res.render('v_inventaris/pinjaman/form-tambah', data)
+    },
+
+    proses_tambah: async (req, res) => {
+        try {
+            // validasi
+            if (!req.body.form_peminjam || req.body.form_peminjam.trim() == '') {
+                return res.redirect('/pinjaman/tambah?notif=Nama peminjam tidak boleh kosong!')
+            }
+
+            // insert peminjaman
+            let insert = await pinjamanModel.insert(req)
+            if (insert.affectedRows > 0) {
+                // update status alat jadi Dipinjam
+                await alatModel.updateStatus(req.body.form_kode_alat, 'Dipinjam')
+                res.redirect('/pinjaman?notif=Peminjaman berhasil dicatat')
+            }
+        } catch (error) {
+            res.redirect('/pinjaman?notif=' + error.message)
+        }
+    },
+
+    proses_kembalikan: async (req, res) => {
+        try {
+            let kembali = await pinjamanModel.kembalikan(req)
+            if (kembali.affectedRows > 0) {
+                // update status alat jadi Tersedia
+                await alatModel.updateStatus(req.body.kode_alat, 'Tersedia')
+                res.redirect('/pinjaman?notif=Alat berhasil dikembalikan')
+            }
+        } catch (error) {
+            res.redirect('/pinjaman?notif=' + error.message)
+        }
+    },
+
+    proses_hapus: async (req, res) => {
+        try {
+            let hapus = await pinjamanModel.hapus(req.params.id)
+            if (hapus.affectedRows > 0) {
+                res.redirect('/pinjaman?notif=Data peminjaman berhasil dihapus')
+            }
+        } catch (error) {
+            res.redirect('/pinjaman?notif=' + error.message)
+        }
+    },
+}

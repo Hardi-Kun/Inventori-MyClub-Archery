@@ -98,4 +98,12 @@ module.exports =
         )
         return eksekusi(sqlSyntax)
     },
+
+    updateStatus: (kode, status) => {
+    let sqlSyntax = mysql.format(
+        `UPDATE alat SET status = ? WHERE kode = ?`,
+        [status, kode]
+    )
+    return eksekusi(sqlSyntax)
+    },
 }
