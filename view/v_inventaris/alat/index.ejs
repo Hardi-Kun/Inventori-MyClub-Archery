@@ -1,0 +1,169 @@
+<%- include('../../v_layout/head') %>
+
+<div class="container" style="margin-top: 80px;">
+
+    <!-- REKAP STATISTIK -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="mb-3">
+                <i class="fa-solid fa-boxes-stacked me-2"></i> Inventaris Alat Panahan
+            </h4>
+        </div>
+        <% for(let i in rekap) { %>
+        <div class="col-6 col-md-2 mb-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold text-success"><%= rekap[i].total %></h3>
+                    <small class="text-muted">Total Alat</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold text-primary"><%= rekap[i].tersedia %></h3>
+                    <small class="text-muted">Tersedia</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold text-warning"><%= rekap[i].dipinjam %></h3>
+                    <small class="text-muted">Dipinjam</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold text-danger"><%= rekap[i].rusak %></h3>
+                    <small class="text-muted">Rusak</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-2 mb-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="fw-bold text-danger"><%= rekap[i].perlu_perbaikan %></h3>
+                    <small class="text-muted">Perlu Perbaikan</small>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <!-- FILTER & TOMBOL TAMBAH -->
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="/alat" class="btn btn-sm btn-outline-secondary">Semua</a>
+                <a href="/alat/filter/Busur" class="btn btn-sm btn-outline-dark">Busur</a>
+                <a href="/alat/filter/Anak Panah" class="btn btn-sm btn-outline-dark">Anak Panah</a>
+                <a href="/alat/filter/Pelindung" class="btn btn-sm btn-outline-dark">Pelindung</a>
+                <a href="/alat/filter/Quiver" class="btn btn-sm btn-outline-dark">Quiver</a>
+                <a href="/alat/filter/Target & Stand" class="btn btn-sm btn-outline-dark">Target & Stand</a>
+                <a href="/alat/filter/Perlengkapan Lomba" class="btn btn-sm btn-outline-dark">Perlengkapan Lomba</a>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/alat/tambah" class="btn btn-success">
+                <i class="fa-solid fa-plus me-1"></i> Tambah Alat
+            </a>
+        </div>
+    </div>
+
+    <!-- FILTER STATUS -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="/alat/status/Tersedia" class="btn btn-sm btn-outline-success">Tersedia</a>
+                <a href="/alat/status/Dipinjam" class="btn btn-sm btn-outline-warning">Dipinjam</a>
+                <a href="/alat/status/Rusak" class="btn btn-sm btn-outline-danger">Rusak</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABEL ALAT -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No</th>
+                            <th>Kode</th>
+                            <th>Nama Alat</th>
+                            <th>Kategori</th>
+                            <th>Tipe</th>
+                            <th>Stok</th>
+                            <th>Kondisi</th>
+                            <th>Status</th>
+                            <th>Lokasi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (alat.length == 0) { %>
+                            <tr>
+                                <td colspan="10" class="text-center text-muted py-4">
+                                    Belum ada data alat
+                                </td>
+                            </tr>
+                        <% } %>
+                        <% for(let i in alat) { %>
+                        <tr>
+                            <td><%= parseInt(i) + 1 %></td>
+                            <td><code><%= alat[i].kode %></code></td>
+                            <td class="fw-500"><%= alat[i].nama %></td>
+                            <td>
+                                <span class="badge bg-primary">
+                                    <%= alat[i].kategori %>
+                                </span>
+                            </td>
+                            <td><small class="text-muted"><%= alat[i].tipe || '-' %></small></td>
+                            <td><%= alat[i].stok %></td>
+                            <td>
+                                <% if (alat[i].kondisi == 'Baik') { %>
+                                    <span class="badge bg-success"><%= alat[i].kondisi %></span>
+                                <% } else if (alat[i].kondisi == 'Cukup') { %>
+                                    <span class="badge bg-warning text-dark"><%= alat[i].kondisi %></span>
+                                <% } else { %>
+                                    <span class="badge bg-danger"><%= alat[i].kondisi %></span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <% if (alat[i].status == 'Tersedia') { %>
+                                    <span class="badge bg-success"><%= alat[i].status %></span>
+                                <% } else if (alat[i].status == 'Dipinjam') { %>
+                                    <span class="badge bg-warning text-dark"><%= alat[i].status %></span>
+                                <% } else { %>
+                                    <span class="badge bg-danger"><%= alat[i].status %></span>
+                                <% } %>
+                            </td>
+                            <td><small class="text-muted"><%= alat[i].lokasi || '-' %></small></td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="/alat/edit/<%= alat[i].kode %>" 
+                                        class="btn btn-sm btn-warning">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a href="/alat/hapus/<%= alat[i].kode %>" 
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Yakin hapus alat ini?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
