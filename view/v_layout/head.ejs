@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Aplikasi Inventaris MyArchery Club">
+    <meta name="author" content="MyArchery Club">
+    <title>MyArchery Inventaris</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <script src="/js-tambahan/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/fontawesome/js/all.js"></script>
+  </head>
+
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/alat">
+            🏹 MyArchery Inventaris
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="/alat">
+                        <i class="fa-solid fa-boxes-stacked me-1"></i> Inventaris
+                    </a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="/alat/tambah">
+                        <i class="fa-solid fa-plus me-1"></i> Tambah Alat
+                    </a>
+                </li>
+            </ul>
+            <% if (notifikasi) { %>
+                <span class="badge bg-success me-3">
+                    <%= notifikasi %>
+                </span>
+            <% } %>
+        </div>
+    </div>
+</nav>
