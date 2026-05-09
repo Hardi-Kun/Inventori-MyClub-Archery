@@ -24,12 +24,16 @@ module.exports =
 
     proses_tambah: async (req, res) => {
         try {
+            // validasi kode tidak boleh kosong
+            if (!req.body.form_kode || req.body.form_kode.trim() == '') {
+                return res.redirect('/alat/tambah?notif=Kode alat tidak boleh kosong!')
+            }
             let insert = await alatModel.insert(req)
             if (insert.affectedRows > 0) {
                 res.redirect('/alat?notif=Alat berhasil ditambahkan')
             }
         } catch (error) {
-            res.redirect('/alat?notif=' + error.message)
+        res.redirect('/alat?notif=' + error.message)
         }
     },
 
@@ -87,4 +91,39 @@ module.exports =
         }
         res.render('v_inventaris/alat/index', data)
     },
+
+    ekspor_excel: async (req, res) => {
+    try {
+        const xlsx      = require('xlsx')
+        const alat      = await alatModel.getAll()
+
+        // format data
+        const data = alat.map((item, index) => ({
+            'No'                : index + 1,
+            'Kode'              : item.kode,
+            'Nama Alat'         : item.nama,
+            'Kategori'          : item.kategori,
+            'Tipe'              : item.tipe || '-',
+            'Stok'              : item.stok,
+            'Kondisi'           : item.kondisi,
+            'Status'            : item.status,
+            'Lokasi'            : item.lokasi || '-',
+            'Tgl Pembelian'     : item.tgl_pembelian ? moment(item.tgl_pembelian).format('DD-MM-YYYY') : '-',
+        }))
+
+        const worksheet     = xlsx.utils.json_to_sheet(data)
+        const workbook      = xlsx.utils.book_new()
+        xlsx.utils.book_append_sheet(workbook, worksheet, 'Inventaris Alat')
+
+        const filename = `inventaris_myarchery_${moment().format('YYYYMMDD_HHmmss')}.xlsx`
+        const buffer   = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' })
+
+        res.setHeader('Content-Disposition', `attachment; filename=${filename}`)
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        res.send(buffer)
+
+    } catch (error) {
+        res.redirect('/alat?notif=' + error.message)
+    }
+},
 }

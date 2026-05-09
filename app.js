@@ -17,6 +17,7 @@ app.post('/alat/edit/:kode',            c_alat.proses_edit)
 app.get('/alat/hapus/:kode',            c_alat.proses_hapus)
 app.get('/alat/filter/:kategori',       c_alat.filter_kategori)
 app.get('/alat/status/:status',         c_alat.filter_status)
+app.get('/alat/ekspor',     c_alat.ekspor_excel)
 
 app.get('/', (req, res) => {
     res.redirect('/alat')
