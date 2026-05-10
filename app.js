@@ -3,6 +3,7 @@ const app           = express()
 const port          = 5000
 const c_alat        = require('./controller/c_alat')
 const c_pinjaman    = require('./controller/c_pinjaman')
+const c_perawatan   = require('./controller/c_perawatan')
 
 app.use( express.urlencoded({extended:false}))
 app.use( express.static('public'))
@@ -26,6 +27,13 @@ app.get('/pinjaman/tambah',             c_pinjaman.hal_form_tambah)
 app.post('/pinjaman/tambah',            c_pinjaman.proses_tambah)
 app.post('/pinjaman/kembalikan/:id',    c_pinjaman.proses_kembalikan)
 app.get('/pinjaman/hapus/:id',          c_pinjaman.proses_hapus)
+
+// ======= ROUTE PERAWATAN =======
+app.get('/perawatan',                   c_perawatan.hal_index)
+app.get('/perawatan/tambah',            c_perawatan.hal_form_tambah)
+app.post('/perawatan/tambah',           c_perawatan.proses_tambah)
+app.post('/perawatan/selesai/:id',      c_perawatan.proses_selesai)
+app.get('/perawatan/hapus/:id',         c_perawatan.proses_hapus)
 
 app.get('/', (req, res) => {
     res.redirect('/alat')

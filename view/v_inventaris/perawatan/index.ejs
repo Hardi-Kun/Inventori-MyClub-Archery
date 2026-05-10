@@ -1,0 +1,88 @@
+<%- include('../../v_layout/head') %>
+
+<div class="container" style="margin-top: 80px;">
+
+    <!-- HEADER -->
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h4 class="mb-0">
+                <i class="fa-solid fa-screwdriver-wrench me-2"></i> Perawatan Alat
+            </h4>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/perawatan/tambah" class="btn btn-success">
+                <i class="fa-solid fa-plus me-1"></i> Catat Perbaikan
+            </a>
+        </div>
+    </div>
+
+    <!-- TABEL PERAWATAN -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No</th>
+                            <th>Kode Alat</th>
+                            <th>Nama Alat</th>
+                            <th>Masalah</th>
+                            <th>Tgl Lapor</th>
+                            <th>Status Perbaikan</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (perawatan.length == 0) { %>
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    Belum ada data perawatan
+                                </td>
+                            </tr>
+                        <% } %>
+                        <% for(let i in perawatan) { %>
+                        <tr>
+                            <td><%= parseInt(i) + 1 %></td>
+                            <td><code><%= perawatan[i].kode_alat %></code></td>
+                            <td class="fw-500"><%= perawatan[i].nama_alat %></td>
+                            <td><%= perawatan[i].masalah %></td>
+                            <td><%= moment(perawatan[i].tgl_lapor).format('DD-MM-YYYY') %></td>
+                            <td>
+                                <% if (perawatan[i].status_perbaikan == 'Selesai') { %>
+                                    <span class="badge bg-success">Selesai</span>
+                                <% } else if (perawatan[i].status_perbaikan == 'Dalam Perbaikan') { %>
+                                    <span class="badge bg-warning text-dark">Dalam Perbaikan</span>
+                                <% } else { %>
+                                    <span class="badge bg-danger">Menunggu</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <% if (perawatan[i].status_perbaikan != 'Selesai') { %>
+                                        <form action="/perawatan/selesai/<%= perawatan[i].id %>" method="POST">
+                                            <input type="hidden" name="kode_alat" value="<%= perawatan[i].kode_alat %>">
+                                            <button type="submit" class="btn btn-sm btn-success"
+                                                onclick="return confirm('Tandai perbaikan selesai?')">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                        </form>
+                                    <% } %>
+                                    <a href="/perawatan/hapus/<%= perawatan[i].id %>"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Yakin hapus data ini?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
