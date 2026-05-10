@@ -1,12 +1,13 @@
+require('dotenv').config()
 const express       = require('express')
 const app           = express()
-const port          = 5000
+const port          = process.env.PORT || 5000
 const c_alat        = require('./controller/c_alat')
 const c_pinjaman    = require('./controller/c_pinjaman')
 const c_perawatan   = require('./controller/c_perawatan')
 
 app.use( express.urlencoded({extended:false}))
-app.use( express.static('public'))
+app.use( express.static('public'))  
 app.set('view engine', 'ejs') 
 app.set('views', './view') 
 
